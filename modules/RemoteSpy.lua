@@ -36,6 +36,7 @@ local methodHooks = {
 }
 
 local currentRemotes = {}
+local currentsOnClientEvent = {}
 
 local remoteDataEvent = Instance.new("BindableEvent")
 local eventSet = false
@@ -57,12 +58,12 @@ for _, instance in pairs(game:GetDescendants()) do
 				method = "FireServer"
 
 				if remotesViewing[instance.ClassName] and instance ~= remoteDataEvent and remoteMethods[method] then
-					local remote = currentRemotes[instance]
-					local vargs = { select(2, ...) }
+					local remote = currentsOnClientEvent[instance]
+					local vargs = { ... }
 
 					if not remote then
 						remote = Remote.new(instance)
-						currentRemotes[instance] = remote
+						currentsOnClientEvent[instance] = remote
 					end
 
 					local remoteIgnored = remote.Ignored
@@ -102,7 +103,7 @@ nmcTrampoline = hookMetaMethod(game, "__namecall", function(...)
 		method = "InvokeServer"
 	end
 
-	if remotesViewing[instance.ClassName] and instance ~= remoteDataEvent and remoteMethods[method] then
+	if instance ~= remoteDataEvent and remoteMethods[method] then
 		local remote = currentRemotes[instance]
 		local vargs = { select(2, ...) }
 
@@ -199,6 +200,7 @@ end
 
 RemoteSpy.RemotesViewing = remotesViewing
 RemoteSpy.CurrentRemotes = currentRemotes
+RemoteSpy.CurrentsOnClientEvent = currentsOnClientEvent
 RemoteSpy.ConnectEvent = connectEvent
 RemoteSpy.RequiredMethods = requiredMethods
 return RemoteSpy

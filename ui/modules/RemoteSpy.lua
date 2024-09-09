@@ -51,6 +51,7 @@ local NewConditionIndex = NewConditionContent.Index
 
 local remotesViewing = Methods.RemotesViewing
 local currentRemotes = Methods.CurrentRemotes
+local CurrentsOnClientEvent = Methods.CurrentsOnClientEvent
 
 local icons = {
     type = "rbxassetid://4702850565",
@@ -994,7 +995,7 @@ end)
 
 Methods.ConnectEvent(function(remoteInstance, callInfo)
     if not removed[remoteInstance] then
-        local remote = currentRemotes[remoteInstance]
+        local remote = currentRemotes[remoteInstance] or CurrentsOnClientEvent[remoteInstance]
         local log = currentLogs[remoteInstance] or Log.new(remote)
 
         log:IncrementCalls(callInfo)
