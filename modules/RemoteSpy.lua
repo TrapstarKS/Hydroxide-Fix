@@ -55,8 +55,11 @@ for _, instance in pairs(game:GetDescendants()) do
 	if instance:IsA("RemoteEvent") then
 		instance.OnClientEvent:Connect(function(...)
 			if getgenv().LogOnClientEvent then
+				print("OnClientEvent", instance, ...)
 				method = "FireServer"
 
+				print(remotesViewing[instance.ClassName], instance ~= remoteDataEvent, remoteMethods[method])
+				print(remotesViewing[instance.ClassName] and instance ~= remoteDataEvent and remoteMethods[method])
 				if remotesViewing[instance.ClassName] and instance ~= remoteDataEvent and remoteMethods[method] then
 					local remote = currentsOnClientEvent[instance]
 					local vargs = { ... }
