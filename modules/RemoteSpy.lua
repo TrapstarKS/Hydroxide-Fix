@@ -58,8 +58,6 @@ for _, instance in pairs(game:GetDescendants()) do
 				print("OnClientEvent", instance, ...)
 				method = "FireServer"
 
-				print(remotesViewing[instance.ClassName], instance ~= remoteDataEvent, remoteMethods[method])
-				print(remotesViewing[instance.ClassName] and instance ~= remoteDataEvent and remoteMethods[method])
 				if remotesViewing[instance.ClassName] and instance ~= remoteDataEvent and remoteMethods[method] then
 					local remote = currentsOnClientEvent[instance]
 					local vargs = { ... }
@@ -78,7 +76,7 @@ for _, instance in pairs(game:GetDescendants()) do
 						local call = {
 							script = getCallingScript((PROTOSMASHER_LOADED ~= nil and 2) or nil),
 							args = vargs,
-							func = getInfo(3).func,
+							func = function() end,
 						}
 
 						remote.IncrementCalls(remote, call)
