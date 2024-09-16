@@ -52,10 +52,9 @@ end
 -- OnClientEvent hook
 
 for _, instance in pairs(game:GetDescendants()) do
-	if instance:IsA("RemoteEvent") then
+	if instance:IsA("RemoteEvent") and instance.ClassName == "RemoteEvent" then
 		instance.OnClientEvent:Connect(function(...)
 			if getgenv().LogOnClientEvent then
-				print("OnClientEvent", instance, ...)
 				method = "FireServer"
 
 				if remotesViewing[instance.ClassName] and instance ~= remoteDataEvent and remoteMethods[method] then
@@ -104,7 +103,7 @@ nmcTrampoline = hookMetaMethod(game, "__namecall", function(...)
 		method = "InvokeServer"
 	end
 
-	if instance ~= remoteDataEvent and remoteMethods[method] then
+	if remotesViewing[instance.ClassName] and instance ~= remoteDataEvent and remoteMethods[method] then
 		local remote = currentRemotes[instance]
 		local vargs = { select(2, ...) }
 
