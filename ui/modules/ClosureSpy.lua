@@ -422,6 +422,7 @@ function ArgsLog.new(log, call)
 
 	button:SetRightCallback(function()
 		selected.args = call.args
+		selected.isclientEvent = call.isclientEvent
 		selected.callingScript = call.script
 	end)
 

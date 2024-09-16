@@ -76,6 +76,7 @@ for _, instance in pairs(game:GetDescendants()) do
 							script = getCallingScript((PROTOSMASHER_LOADED ~= nil and 2) or nil),
 							args = vargs,
 							func = function() end,
+							isclientEvent = true,
 						}
 
 						remote.IncrementCalls(remote, call)
