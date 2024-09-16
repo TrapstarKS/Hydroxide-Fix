@@ -2,7 +2,7 @@
 ```lua
 local owner = "TrapstarKS"
 local branch = "main"
-
+getgenv().LogOnClientEvent = false -- Set to true if you want to log OnClientEvent calls
 local function webImport(file)
     return loadstring(game:HttpGetAsync(("https://raw.githubusercontent.com/%s/Hydroxide-Fix/%s/%s.lua"):format(owner, branch, file)), file .. '.lua')()
 end
